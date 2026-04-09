@@ -1,0 +1,9 @@
+# HW/SW Partition Rationale
+
+For this hardware/software co-design project, I will accelerate the `Conv2D` kernel—specifically the `_im2col` matrix construction and the subsequent convolution matrix multiplications. Profiling the Python baseline reveals that the nested spatial loops in `_im2col` form the dominant computational bottleneck. Furthermore, the roofline analysis demonstrates that this kernel is severely memory-bound on a standard CPU, operating at an arithmetic intensity of merely 1.058 FLOPs/byte due to redundant loads of overlapping image patches from DRAM. Accelerating this specific operation in custom hardware provides the highest return on investment.
+
+The software baseline running on the host microcontroller will continue to handle the overall control flow, data loading, and lighter operations. This includes the non-linear activation functions (ReLU), max pooling, the final fully-connected dense layers, and calculating the loss function. 
+
+To avoid becoming interface-bound, the interface bandwidth must be carefully managed. If the target accelerator throughput is 100 GFLOP/s, an arithmetic intensity of 1.058 would demand nearly 94.5 GB/s of interface bandwidth. By connecting via an SPI bus, streaming raw patches from the host is physically impossible. Therefore, the accelerator will require dedicated on-chip SRAM to buffer the input images and weights locally. This maximizes data reuse and drastically raises the effective arithmetic intensity seen by the slow SPI interface.
+
+While the current Python implementation is strictly memory-bound, the introduction of local memory buffers and INT8 quantization in the hardware accelerator will shift the bottleneck, allowing the kernel to become compute-bound and fully utilize the custom MAC array without choking the host connection.
