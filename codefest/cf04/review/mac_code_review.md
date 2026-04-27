@@ -13,3 +13,4 @@
 (c) Correction: Explicitly cast the multiplication product to 32 bits before adding it to the accumulator to eliminate ambiguity.
   ```systemverilog
   out <= out + 32'(a * b);
+Correcttion
