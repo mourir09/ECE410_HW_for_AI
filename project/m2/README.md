@@ -13,14 +13,17 @@ Run the following commands from the root of the repository to compile and simula
 ```bash
 iverilog -g2012 -o project/m2/sim/core_sim.vvp project/m2/rtl/compute_core.sv project/m2/tb/tb_compute_core.sv
 vvp project/m2/sim/core_sim.vvp
+```
 ### 2. AXI4-Stream Interface Testbench
 This testbench wraps the compute core and verifies the TVALID/TREADY handshaking, data unpacking, and backpressure handling capabilities.
 Run the following commands from the root of the repository to compile and simulate:
 ```bash
 iverilog -g2012 -o project/m2/sim/interface_sim.vvp project/m2/rtl/compute_core.sv project/m2/rtl/interface.sv project/m2/tb/tb_interface.sv
 vvp project/m2/sim/interface_sim.vvp
+```
 ### 3. Generating Simulation Logs
 To generate the exact .log files submitted in this repository, pipe the output of the vvp command directly into a text file:
 ```bash
  vvp project/m2/sim/core_sim.vvp > project/m2/sim/compute_core_run.log
 vvp project/m2/sim/interface_sim.vvp > project/m2/sim/interface_run.log
+```
