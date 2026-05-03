@@ -1,0 +1,5 @@
+VCD info: dumpfile project/m2/sim/compute_core.vcd opened for output.
+---------------------------------
+SIMULATION RESULT: PASS
+---------------------------------
+project/m2/tb/tb_compute_core.sv:104: $finish called at 66000 (1ps)

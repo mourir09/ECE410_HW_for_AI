@@ -1,0 +1,119 @@
+$date
+	Sat May  2 18:18:19 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_compute_core $end
+$var wire 1 ! valid_out $end
+$var wire 32 " result [31:0] $end
+$var reg 8 # a_in [7:0] $end
+$var reg 8 $ b_in [7:0] $end
+$var reg 1 % clk $end
+$var reg 32 & expected_acc [31:0] $end
+$var reg 1 ' rst $end
+$var reg 1 ( valid_in $end
+$var integer 32 ) error_count [31:0] $end
+$scope module dut $end
+$var wire 8 * a_in [7:0] $end
+$var wire 8 + b_in [7:0] $end
+$var wire 1 % clk $end
+$var wire 32 , result [31:0] $end
+$var wire 1 ' rst $end
+$var wire 1 ( valid_in $end
+$var wire 1 ! valid_out $end
+$var reg 32 - accumulator [31:0] $end
+$var reg 1 . out_flag $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+x.
+bx -
+bx ,
+b0 +
+b0 *
+b0 )
+0(
+1'
+b0 &
+0%
+b0 $
+b0 #
+bx "
+x!
+$end
+#5000
+0!
+0.
+b0 "
+b0 ,
+b0 -
+1%
+#10000
+0%
+#15000
+1%
+#20000
+0'
+0%
+#25000
+1%
+#30000
+b1010 &
+b10 $
+b10 +
+b101 #
+b101 *
+1(
+0%
+#35000
+1!
+1.
+b1010 "
+b1010 ,
+b1010 -
+1%
+#40000
+b11111111111111111111111111111110 &
+b100 $
+b100 +
+b11111101 #
+b11111101 *
+0%
+#45000
+b11111111111111111111111111111110 "
+b11111111111111111111111111111110 ,
+b11111111111111111111111111111110 -
+1%
+#50000
+b1100010 &
+b1010 $
+b1010 +
+b1010 #
+b1010 *
+0%
+#55000
+b1100010 "
+b1100010 ,
+b1100010 -
+1%
+#60000
+b0 $
+b0 +
+b0 #
+b0 *
+0(
+0%
+#65000
+0!
+0.
+1%
+#66000

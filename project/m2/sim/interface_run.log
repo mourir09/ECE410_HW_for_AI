@@ -1,0 +1,5 @@
+VCD info: dumpfile project/m2/sim/interface.vcd opened for output.
+---------------------------------
+SIMULATION RESULT: PASS
+---------------------------------
+project/m2/tb/tb_interface.sv:162: $finish called at 110000 (1ps)
