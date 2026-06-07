@@ -1,14 +1,6 @@
 `timescale 1ns/1ps
 
-/*
- * Module: tb_top
- * Description: End-to-end co-simulation testbench for Milestone 3.
- * Verifies the integrated top module by acting as a host CPU,
- * driving the AXI4-Stream inputs and verifying the outputs.
- */
-
 module tb_top;
-
     // Clock and Reset
     logic clk;
     logic rst;
@@ -23,7 +15,7 @@ module tb_top;
     logic        m_axis_tready;
     logic [31:0] m_axis_tdata;
 
-    int error_count;
+    int output_count;
 
     // Instantiate the Integrated Top Module (DUT)
     top dut (
@@ -43,10 +35,9 @@ module tb_top;
         forever #5 clk = ~clk;
     end
 
-    // Test sequence
+    // Input Driver Thread (Pumps 100 pixels in)
     initial begin
-        // Initialize VCD dumping for M3 waveform visualization
-        $dumpfile("project/m3/sim/cosim.vcd");
+        $dumpfile("mtest_cosim.vcd");
         $dumpvars(0, tb_top);
 
         // Initialize signals
@@ -54,88 +45,45 @@ module tb_top;
         s_axis_tvalid = 0;
         s_axis_tdata = 0;
         m_axis_tready = 0;
-        error_count = 0;
+        output_count = 0;
 
         // Release reset
         @(negedge clk);
         @(negedge clk);
         rst = 0;
+        m_axis_tready = 1; // Downstream is always ready to receive
 
-        // ---------------------------------------------------------
-        // Test 1: Standard AXI-Stream Write & Read
-        // Send a = 5, b = 3. Expected Result = 15.
-        // ---------------------------------------------------------
-        @(negedge clk);
-        s_axis_tvalid = 1;
-        s_axis_tdata  = {8'd3, 8'd5}; // {b_in, a_in}
-        m_axis_tready = 1;            // Downstream is ready
-
-        // Wait for interface to accept data
-        wait(s_axis_tready == 1'b1);
-        @(negedge clk);
-        s_axis_tvalid = 0; // De-assert after acceptance
-
-        // Wait for result to pop out
-        wait(m_axis_tvalid == 1'b1);
-        
-        if (m_axis_tdata !== 32'd15) begin
-            $display("ERROR (Test 1): Expected 15, Got %0d", m_axis_tdata);
-            error_count++;
+        // Pump in 100 sequential pixels (simulating ~3.5 rows of an image)
+        for (int i = 0; i < 100; i++) begin
+            @(negedge clk);
+            s_axis_tvalid = 1;
+            // Pad the top 8 bits with 0, put the pixel data in the bottom 8 bits
+            s_axis_tdata = {8'd0, i[7:0]}; 
+            
+            // Wait for handshake
+            wait(s_axis_tready == 1'b1);
         end
 
-        // Wait for the next clock edges so the interface registers 
-        // that the handshake is complete and clears out the 15
-        @(posedge clk);
-        @(negedge clk);
-
-        // ---------------------------------------------------------
-        // Test 2: Backpressure (m_axis_tready is LOW)
-        // Send a = -2, b = 4. Expected Accumulation = 15 + (-8) = 7
-        // ---------------------------------------------------------
-        s_axis_tvalid = 1;
-        s_axis_tdata  = {8'd4, -8'sd2}; 
-        m_axis_tready = 0; // Downstream is NOT ready yet
-
-        wait(s_axis_tready == 1'b1);
+        // Stop sending data
         @(negedge clk);
         s_axis_tvalid = 0;
 
-        // Wait for the new valid flag to pop up
-        wait(m_axis_tvalid == 1'b1);
+        // Wait a few more clock cycles for the final pixels to drain out of the pipeline
+        #500;
         
-        // Wait two cycles to prove it holds the data while backpressured
-        @(posedge clk);
-        @(posedge clk);
-        
-        if (m_axis_tvalid !== 1'b1) begin
-            $display("ERROR (Test 2): Interface dropped valid flag during backpressure.");
-            error_count++;
-        end
-
-        // Now assert ready to consume the data
-        @(negedge clk);
-        m_axis_tready = 1;
-
-        @(posedge clk);
-        #1;
-        if (m_axis_tdata !== 32'd7) begin
-            $display("ERROR (Test 2): Expected 7, Got %0d", m_axis_tdata);
-            error_count++;
-        end
-
-        // ---------------------------------------------------------
-        // End of Simulation
-        // ---------------------------------------------------------
-        @(negedge clk);
         $display("---------------------------------");
-        if (error_count == 0) begin
-            $display("SIMULATION RESULT: PASS");
-        end else begin
-            $display("SIMULATION RESULT: FAIL (%0d errors)", error_count);
-        end
+        $display("SIMULATION COMPLETE");
+        $display("Total valid outputs generated: %0d", output_count);
         $display("---------------------------------");
-
         $finish;
+    end
+
+    // Output Monitor Thread (Watches for results)
+    always @(posedge clk) begin
+        if (m_axis_tvalid && m_axis_tready && !rst) begin
+            $display("Time: %0t | Output #%0d | Result: %0d", $time, output_count, $signed(m_axis_tdata));
+            output_count++;
+        end
     end
 
 endmodule
