@@ -1,10 +1,10 @@
-# ECE 410/510 Capstone: AI Hardware Accelerator
+# ECE410: Hardware for AI - Capstone Accelerator
 
 **Author:** Michael Ngo
 **Term:** Spring 2026
 
 ## Project Overview
-This repository contains the complete RTL design, verification, and physical synthesis of a custom hardware accelerator for 3x3 spatial convolutions. Designed as the final capstone project for ECE 410/510, the architecture successfully shifts a memory-bound software kernel into a compute-bound silicon powerhouse.
+This repository contains the complete RTL design, verification, and physical synthesis of a custom hardware accelerator for 3x3 spatial convolutions. Designed as the final capstone project for ECE410: Hardware for AI, the architecture successfully shifts a memory-bound software kernel into a compute-bound silicon powerhouse.
 
 ## Final Architecture Specs
 * **Kernel:** 3x3 Convolution (Edge Detection / Image Processing)

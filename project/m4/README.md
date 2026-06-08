@@ -1,7 +1,7 @@
 # Milestone 4: Physical Synthesis and Final Benchmarking
 
 **Author:** Michael Ngo
-**Course:** ECE 410/510 Capstone
+**Course:** ECE410: Hardware for AI
 
 This directory contains the final RTL, physical synthesis reports, benchmarks, and documentation for the M4 hardware accelerator submission.
 
