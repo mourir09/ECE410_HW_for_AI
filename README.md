@@ -1,7 +1,6 @@
 # ECE 410/510 Capstone: AI Hardware Accelerator
 
-**Author:** Mike
-**Team Collaborators:** Andrew N, Andrew, Khoi, Jeff, Lina, Kayla
+**Author:** Michael Ngo
 **Term:** Spring 2026
 
 ## Project Overview
