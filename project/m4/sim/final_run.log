@@ -1,0 +1,46 @@
+VCD info: dumpfile m4_cosim.vcd opened for output.
+Time: 645000 | Output #0 | Result: x
+Time: 655000 | Output #1 | Result: -224
+Time: 665000 | Output #2 | Result: -224
+Time: 675000 | Output #3 | Result: -224
+Time: 685000 | Output #4 | Result: -224
+Time: 695000 | Output #5 | Result: -224
+Time: 705000 | Output #6 | Result: -224
+Time: 715000 | Output #7 | Result: -224
+Time: 725000 | Output #8 | Result: -224
+Time: 735000 | Output #9 | Result: -224
+Time: 745000 | Output #10 | Result: -224
+Time: 755000 | Output #11 | Result: -224
+Time: 765000 | Output #12 | Result: -224
+Time: 775000 | Output #13 | Result: -224
+Time: 785000 | Output #14 | Result: -224
+Time: 795000 | Output #15 | Result: -224
+Time: 805000 | Output #16 | Result: -224
+Time: 815000 | Output #17 | Result: -224
+Time: 825000 | Output #18 | Result: -224
+Time: 835000 | Output #19 | Result: -224
+Time: 845000 | Output #20 | Result: -224
+Time: 855000 | Output #21 | Result: -224
+Time: 865000 | Output #22 | Result: -224
+Time: 875000 | Output #23 | Result: -224
+Time: 885000 | Output #24 | Result: -224
+Time: 895000 | Output #25 | Result: -224
+Time: 925000 | Output #26 | Result: -224
+Time: 935000 | Output #27 | Result: -224
+Time: 945000 | Output #28 | Result: -224
+Time: 955000 | Output #29 | Result: -224
+Time: 965000 | Output #30 | Result: -224
+Time: 975000 | Output #31 | Result: -224
+Time: 985000 | Output #32 | Result: -224
+Time: 995000 | Output #33 | Result: -224
+Time: 1005000 | Output #34 | Result: -224
+Time: 1015000 | Output #35 | Result: -224
+Time: 1025000 | Output #36 | Result: -224
+Time: 1035000 | Output #37 | Result: -224
+Time: 1045000 | Output #38 | Result: -224
+Time: 1055000 | Output #39 | Result: -224
+---------------------------------
+SIMULATION COMPLETE
+Total valid outputs generated: 40
+---------------------------------
+../tb/tb_top.sv:78: $finish called at 1530000 (1ps)
