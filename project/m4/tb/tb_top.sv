@@ -37,7 +37,7 @@ module tb_top;
 
     // Input Driver Thread (Pumps 100 pixels in)
     initial begin
-        $dumpfile("mtest_cosim.vcd");
+        $dumpfile("m4_cosim.vcd");
         $dumpvars(0, tb_top);
 
         // Initialize signals
