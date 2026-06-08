@@ -1,13 +1,36 @@
 # Milestone 4: Physical Synthesis and Final Benchmarking
 
-This directory contains the final deliverables for the M4 Capstone submission. The RTL in this folder represents the final, fully synthesized architecture that produced the 1.8 GOPS throughput benchmark.
+**Author:** Michael Ngo
+**Course:** ECE 410/510 Capstone
 
-## RTL Updates from M3
-The core architecture remains consistent with the M3 pipeline, with strict refinements made to the AXI4-Stream handshake logic to ensure robust backpressure management. The module utilizes a sliding-window dataflow with two internal line buffers and a 3x3 shift-register grid, perfectly saturating the 9 MAC units every clock cycle after an initial 58-cycle warmup latency.
+This directory contains the final RTL, physical synthesis reports, benchmarks, and documentation for the M4 hardware accelerator submission.
 
-## Deliverables Checklist
-* **Final RTL & Testbench:** Located in `rtl/` and `tb/`.
-* **Simulation Verification:** `sim/final_run.log` and `sim/final_waveform.png` demonstrate cycle-accurate AXI streaming and a verified 58-cycle initial latency.
-* **OpenLane 2 Synthesis:** The `synth/` directory contains the full suite of physical implementation reports (Timing, Area, Power) targeting the Sky130 node at 100 MHz.
-* **Benchmarks:** `bench/` contains the raw CSV data, summary analysis, and the annotated roofline plot demonstrating the shift to a compute-bound regime.
-* **Design Justification:** `report/design_justification.pdf` contains the comprehensive engineering analysis of the architecture, dataflow, and design tradeoffs.
+## File Catalog
+
+### RTL (`project/m4/rtl/`)
+* `rtl/top.sv` - Top-level module instantiating the streaming interface and the unrolled compute engine. *(Supports: RTL Design)*
+* `rtl/interface.sv` - AXI4-Stream handshake logic and shift-register/line buffer memory hierarchy. *(Supports: Hardware interface report section)*
+* `rtl/compute_core.sv` - Combinational 9-MAC unrolled compute engine for 3x3 convolutions. *(Supports: Dataflow and architecture report section)*
+
+### Testbench (`project/m4/tb/`)
+* `tb/tb_top.sv` - Self-checking SystemVerilog testbench injecting random AXI backpressure to stress internal state retention. *(Supports: Verification report section)*
+
+### Simulation (`project/m4/sim/`)
+* `sim/final_run.log` - Icarus Verilog console output proving successful pipeline execution and a 58-cycle warmup latency. *(Supports: Verification report section)*
+* `sim/final_waveform.png` - Annotated VCD screenshot demonstrating valid data output and cycle-accurate AXI handshakes. *(Supports: Figures referenced in the report committed)*
+
+### Synthesis (`project/m4/synth/`)
+* `synth/config.json` - OpenLane 2 configuration dictating the 100 MHz clock period and Sky130 target node. *(Supports: OpenLane 2 configuration committed)*
+* `synth/openlane_run.log` - Captured stdout/stderr from the OpenLane 2 physical implementation flow. *(Supports: OpenLane run log committed)*
+* `synth/timing_report.txt` - Post-routing Static Timing Analysis (STA) showing positive slack at 100 MHz. *(Supports: Timing report with critical path and slack)*
+* `synth/area_report.txt` - Standard cell count breakdown highlighting the area dominance of the line buffers. *(Supports: Area report with cell counts and total area)*
+* `synth/power_report.txt` - Estimated dynamic and static leakage power. *(Supports: Power report with estimate)*
+
+### Benchmarks (`project/m4/bench/`)
+* `bench/benchmark_data.csv` - Raw numerical values comparing the software baseline to the hardware execution. *(Supports: Raw measurement data committed)*
+* `bench/benchmark.md` - Analysis of the 1.8 GOPS throughput and the calculated 36x speedup. *(Supports: Benchmark comparison / Speedup vs M1)*
+* `bench/roofline_final.png` - Log-log plot showing the architecture operating at 18.0 Ops/Byte in the compute-bound region. *(Supports: Final roofline plot)*
+
+### Report (`project/m4/report/`)
+* `report/design_justification.pdf` - Comprehensive engineering analysis detailing the shift from memory-bound to compute-bound performance. *(Supports: Report committed as PDF)*
+* `report/figures/` - Directory holding isolated image assets referenced in the final PDF. *(Supports: Figures referenced in the report committed)*
