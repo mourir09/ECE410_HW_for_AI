@@ -1,0 +1,6 @@
+Metric,M1_Software_Baseline,M4_Hardware_Accelerator,Units
+Clock_Frequency,100,100,MHz
+Latency_to_First_Valid,150000,58,Cycles
+Throughput,0.05,1.8,GOPS
+Operational_Intensity,0.25,18.0,Ops/Byte
+Energy_per_Frame,45.0,2.1,mJ
